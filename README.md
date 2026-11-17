@@ -12,7 +12,27 @@ A Python script built to automate the analysis of raw server logs. It filters ou
 ### 2. [E-commerce Database Analysis (SQL)](./sql_marketplace)
 A relational database schema designed for an online marketplace platform prototype (similar to Vinted). Includes DDL scripts for table creation (`users`, `items`), mock data insertion, and analytical SQL queries.
 
-#### 🗂️ Database Structure & Relations:
+#### 🗂️ Database Schema & Relationships:
+
+```text
+┌─────────────────────────┐             ┌─────────────────────────┐
+│         users           │             │          items          │
+├─────────────────────────┤             ├─────────────────────────┤
+│ PK  user_id             │◄─────────── │ FK  seller_id           │
+│     username            │             │ PK  item_id             │
+│     country             │             │     title, price, status│
+└─────────────────────────┘             └────────────┬────────────┘
+             │                                       │
+             │ (buyer)                               │ (1-to-1)
+             ▼                                       ▼
+┌─────────────────────────┐             ┌─────────────────────────┐
+│         orders          │             │       categories        │
+├─────────────────────────┤             ├─────────────────────────┤
+│ PK  order_id            │             │ PK  category_id         │
+│ FK  buyer_id            │             │     category_name       │
+│ FK  item_id             │             └─────────────────────────┘
+└─────────────────────────┘
+
 * **`users`** $\rightarrow$ **`items`** (One-to-Many): A single user/seller can list multiple items. Linked via `seller_id = user_id`.
 * **`categories`** $\rightarrow$ **`items`** (One-to-Many): Each category contains multiple items. Linked via `category_id`.
 * **`items`** $\rightarrow$ **`orders`** (One-to-One): An item can be sold and ordered only once. Linked via `item_id`.
