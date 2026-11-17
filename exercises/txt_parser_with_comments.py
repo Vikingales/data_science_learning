@@ -1,56 +1,56 @@
 def extract_errors(filename):
-    # Создаем пустой список, куда будем складывать ошибки
+    # Create empty list to collect errors
     error_list = []
     
-    # Используем try/except, чтобы программа не упала, если файла нет
+    # Use try/except, to prevent program fail, if there's no errors
     try:
         file = open(filename, 'r', encoding='utf-8')
         
-        # Перебираем файл построчно с помощью цикла for
+        # Iterate file lines with cycle for
         for line in file:
             
-            # Строковые методы (strings) и условия (conditionals)
-            # Если строка начинается с INFO, пропускаем ее с помощью continue
+            # string methods and conditionals
+            # If string starts with INFO, skip it with continue
             if line.startswith('INFO'):
                 continue
             
-            # Если в строке есть слово ERROR, обрабатываем ее
+            # If there's word ERROR in line, process it
             if 'ERROR' in line:
-                # Разрезаем строку по пробелам на список слов
-                # Пример: ['2026-11-10', '10:05', 'ERROR', 'App', 'crashed', 'on', 'Android']
+                # Split the string into a list of words based on spaces
+                # example: ['2026-11-10', '10:05', 'ERROR', 'App', 'crashed', 'on', 'Android']
                 words = line.split()
                 
-                # Берем дату (первое слово, индекс 0)
+                # Take the date (first word, index 0)
                 date = words[0]
-                # Берем платформу (последнее слово, индекс -1)
+                # Take the platform (last word, index -1)
                 platform = words[-1]
                 
-                # Создаем кортеж (tuple) с нужными данными
+                # Make tuple
                 error_record = (date, platform)
                 
-                # Добавляем кортеж в наш список
+                # Add tuple into the list
                 error_list.append(error_record)
                 
         file.close()
         
     except FileNotFoundError:
         print("Error: The file was not found. Please check the filename.")
-        return [] # Возвращаем пустой список в случае ошибки
+        return [] # return empty list in case of mistake
         
     return error_list
 
-# --- Основная часть программы ---
+# --- Main part ---
 
 print("Starting log analysis...")
 
-# Вызываем нашу функцию
+# Call function with file name
 found_errors = extract_errors('server_logs.txt')
 
-# Проверяем, нашли ли мы что-нибудь
+# Check if we find smth
 if len(found_errors) > 0:
     print("Found critical errors:")
     
-    # Еще один цикл for, чтобы красиво вывести результат
+    # Cycle for to see result
     for error in found_errors:
         date = error[0]
         platform = error[1]
