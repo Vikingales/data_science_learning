@@ -1,3 +1,10 @@
+# A beginner Python project that reads a server log file and extracts error entries. 
+# It identifies lines containing ERROR, collects the date and platform information, 
+# and displays the errors along with their total count. 
+# The script also handles cases where the input file cannot be found.
+# Skills I applied: File handling, reading text files, loops, conditional statements (if/else), 
+# exception handling (try/except), string methods (split), lists, tuples, f-strings.
+
 def extract_errors(filename):
    
     error_list = []

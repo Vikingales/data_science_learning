@@ -1,3 +1,5 @@
+-- Basic analytical SQL queries for an online marketplace platform prototype described in file 1_create_schema.sql 
+
 -- QUERY 1: Calculate total sales value and sold items per seller
 -- Skills I applied: INNER JOIN, GROUP BY, Aggregate functions (SUM, COUNT), ORDER BY
 SELECT u.username,

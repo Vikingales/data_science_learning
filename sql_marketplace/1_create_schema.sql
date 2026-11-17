@@ -1,3 +1,7 @@
+-- A relational database schema designed for an online marketplace platform prototype (similar to Vinted). 
+-- Includes SQL scripts for creating a relational database with four tables (users, items, categories, orders) 
+-- and inserting sample data.
+
 -- 1. Table of product categories
 CREATE TABLE categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
