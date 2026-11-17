@@ -54,6 +54,8 @@ A relational database schema designed for an online marketplace platform prototy
 
 **Skills used in this project:** Database design, primary and foreign keys, data integrity constraints (CHECK, UNIQUE), INNER JOIN, multi-table JOINs, GROUP BY, aggregate functions (COUNT, SUM, AVG), filtering (WHERE), sorting (ORDER BY), result limitation (LIMIT), and rounding (ROUND).
 
-#### Tools I used for both projects:
+#### Tools I used:
 - Visual Studio Code (VS Code)
 - Git & GitHub
+- MySQL
+- Python

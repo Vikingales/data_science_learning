@@ -1,12 +1,12 @@
 -- 1. Table of product categories
 CREATE TABLE categories (
-    category_id SERIAL PRIMARY KEY,
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(50) NOT NULL UNIQUE
 );
 
 -- 2. Table of users (sellers and buyers)
 CREATE TABLE users (
-    user_id SERIAL PRIMARY KEY,
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     country VARCHAR(30) NOT NULL,
     created_at DATE NOT NULL
@@ -14,7 +14,7 @@ CREATE TABLE users (
 
 -- 3. Table of items (offered for sale)
 CREATE TABLE items (
-    item_id SERIAL PRIMARY KEY,
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
     seller_id INT NOT NULL REFERENCES users(user_id),
     title VARCHAR(100) NOT NULL,
     category_id INT NOT NULL REFERENCES categories(category_id),
@@ -24,7 +24,7 @@ CREATE TABLE items (
 
 -- 4. Orders/transactions table (records the fact that a product was purchased by a buyer)
 CREATE TABLE orders (
-    order_id SERIAL PRIMARY KEY,
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
     item_id INT NOT NULL UNIQUE REFERENCES items(item_id), -- One item can be sold once
     buyer_id INT NOT NULL REFERENCES users(user_id),
     order_date DATE NOT NULL,
