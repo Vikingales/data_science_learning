@@ -32,6 +32,7 @@ A relational database schema designed for an online marketplace platform prototy
 │ FK  buyer_id            │             │     category_name       │
 │ FK  item_id             │             └─────────────────────────┘
 └─────────────────────────┘
+```
 
 * **`users`** $\rightarrow$ **`items`** (One-to-Many): A single user/seller can list multiple items. Linked via `seller_id = user_id`.
 * **`categories`** $\rightarrow$ **`items`** (One-to-Many): Each category contains multiple items. Linked via `category_id`.
