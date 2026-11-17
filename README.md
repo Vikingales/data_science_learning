@@ -6,12 +6,20 @@ This repository contains my practical projects and daily exercises as I master P
 ## Featured Projects 
 
 ### 1. [Server Log Parser (Python)](./txt_parser)
-A Python script built to automate the analysis of raw server logs. It filters out informational events, extracts critical errors (e.g., application crashes, failed payments), and outputs a structured summary. 
+A beginner Python project that reads a server log file and extracts error entries. It identifies lines containing `ERROR`, collects the date and platform information, and displays the errors along with their total count. The script also handles cases where the input file cannot be found. 
 
-**Skills used in this project:** File handling, control flow (if/else, loops), exception handling (try/except), and data extraction using tuples and lists.
+#### Project Files:
+- `log_parser.py` - Script for parsing log.
+- `server_logs.txt` - File simulating a server log.
+
+**Skills used in this project:** File handling, reading text files, loops, conditional statements (if/else), exception handling (try/except), string methods (split), lists, tuples, and f-strings.
 
 ### 2. [E-commerce Database Analysis (SQL)](./sql_marketplace)
-A relational database schema designed for an online marketplace platform prototype (similar to Vinted). Includes SQL scripts for creating a relational database with four tables (users, items, categories, orders), inserting sample data, and performing basic analytical queries.
+A relational database schema designed for an online marketplace platform prototype (similar to Vinted). Includes SQL scripts for creating a relational database schema with four tables (users, items, categories, orders), inserting sample data, and performing basic analytical queries.
+
+#### Project Files:
+- `1_create_schema.sql` - Database tables, constraints, and sample data.
+- `2_queries.sql` - Basic analytical SQL queries.
 
 #### Database Schema & Relationships:
 
@@ -45,3 +53,7 @@ A relational database schema designed for an online marketplace platform prototy
 - **users → orders (One-to-Many):** A user can purchase multiple items over time. Linked via buyer_id = user_id.
 
 **Skills used in this project:** Database design, primary and foreign keys, data integrity constraints (CHECK, UNIQUE), INNER JOIN, multi-table JOINs, GROUP BY, aggregate functions (COUNT, SUM, AVG), filtering (WHERE), sorting (ORDER BY), result limitation (LIMIT), and rounding (ROUND).
+
+#### Tools I used for both projects:
+- Visual Studio Code (VS Code)
+- Git & GitHub
