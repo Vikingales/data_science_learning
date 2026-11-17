@@ -1,26 +1,26 @@
 import json
 
-# 1. Открываем и читаем наш JSON файл
+# 1. Open and read JSON file
 with open('sentry_weekly_export.json', 'r', encoding='utf-8') as file:
     data = json.load(file)
 
 issues_list = data['issues']
 filtered_issues = []
 
-# 2. Фильтруем баги (собираем подходящие в новый список)
+# 2. Filter bugs (collect the right ones into the list)
 for issue in issues_list:
-    # Обращаемся к значениям по ключам словаря
+    # Access values via dictionary keys 
     if issue['status'] == 'unresolved' or issue['affected_users'] > 100:
         filtered_issues.append(issue)
 
-# 3. Сортируем записи от большего к меньшему количеству 'affected_users'
-# Используем лямбда-функцию, чтобы указать, по какому именно ключу сортировать
+# 3. Sort the records from the largest to the smallest quantity 'affected_users'
+# Use lambda to specify which key to sort by
 filtered_issues.sort(key=lambda x: x['affected_users'], reverse=True)
 
-# Берем только Топ-3 для отчета, чтобы не спамить в чат
+# Include only the top-3 in the report, to not spam
 top_issues = filtered_issues[:3]
 
-# 4. Формируем красивый текст и записываем в файл
+# 4. Creating nice text and write it in file
 message_lines = ["🚨 *Weekly Sentry Crash Report - Top 3 Critical Issues* 🚨\n"]
 for i, bug in enumerate(top_issues, 1):
     line = f"{i}. {bug['error_type']} in {bug['location']} ({bug['platform']}) - {bug['affected_users']} users affected"
@@ -28,29 +28,29 @@ for i, bug in enumerate(top_issues, 1):
 
 final_message = "\n".join(message_lines)
 
-# Создаем файл slack_message.txt и записываем туда текст
+# Create file slack_message.txt and add text into there
 with open('slack_message.txt', 'w', encoding='utf-8') as msg_file:
     msg_file.write(final_message)
 
-print("✅ Файл slack_message.txt успешно создан!\n")
+print("✅ File slack_message.txt is created!\n")
 
 
-# 5. Функция-заглушка для заведения багов в Jira
+# 5. Stub function for creating bugs in Jira
 def create_jira_ticket(bug):
-    # В реальном проекте здесь был бы вызов requests.post('https://jira.vinted.com/rest/api/...', json={...})
-    print(f"[JIRA API] Заведен баг-репорт для {bug['error_type']} на {bug['platform']} (Ticket: VNT-101)")
+    # in real project I would call requests.post('https://jira.vinted.com/rest/api/...', json={...})
+    print(f"[JIRA API] Bug report is created {bug['error_type']} on {bug['platform']} (Ticket: VNT-101)")
 
-# Заводим баги на каждый пункт в полученном списке
+# Create bug for each issue in the list
 for bug in top_issues:
     create_jira_ticket(bug)
 
 
-# 6. Отправляем файл сообщением в Slack
+# 6. Send file into Slack chat
 def send_to_slack(text):
-    # В реальности использовался бы Slack Webhook:
+    # in real project I would use Slack Webhook:
     # webhook_url = "https://hooks.slack.com/services/T0000/B0000/XXXXX"
     # requests.post(webhook_url, json={"text": text})
-    print("\n[SLACK API] Сообщение успешно отправлено в канал #dev-alerts!")
+    print("\n[SLACK API] Message is sent to #dev-alerts!")
     print("-" * 40)
     print(text)
     print("-" * 40)
