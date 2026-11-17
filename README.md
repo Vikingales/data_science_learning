@@ -12,19 +12,10 @@ A Python script built to automate the analysis of raw server logs. It filters ou
 ### 2. [E-commerce Database Analysis (SQL)](./sql_marketplace)
 A relational database schema designed for an online marketplace platform prototype (similar to Vinted). Includes DDL scripts for table creation (`users`, `items`), mock data insertion, and analytical SQL queries.
 
-#### 🗂️ Database Entity-Relationship (ER) Schema:
-```text
-[users] (1) <---> (0..N) [items] (1) <---> (0..1) [orders]
-   ^                      ^                         ^
-   |                      |                         |
-   +----------------------(0..N) [orders] (buyer) ---+
-   |
-[categories] (1) <---> (0..N) [items]
+#### 🗂️ Database Structure & Relations:
+* **`users`** $\rightarrow$ **`items`** (One-to-Many): A single user/seller can list multiple items. Linked via `seller_id = user_id`.
+* **`categories`** $\rightarrow$ **`items`** (One-to-Many): Each category contains multiple items. Linked via `category_id`.
+* **`items`** $\rightarrow$ **`orders`** (One-to-One): An item can be sold and ordered only once. Linked via `item_id`.
+* **`users` (Buyer)** $\rightarrow$ **`orders`** (One-to-Many): A user can purchase multiple items over time. Linked via `buyer_id = user_id`.
 
-Key Relations & Constraints:
-users ➔ items: One-to-Many (One user/seller can list multiple items). Linked via seller_id = user_id.
-categories ➔ items: One-to-Many (One category contains multiple items). Linked via category_id.
-items ➔ orders: One-to-One (Each item can be sold/ordered only once). Linked via item_id.
-users ➔ orders (Buyer): One-to-Many (One user can place multiple orders). Linked via buyer_id = user_id.
-
-* **Skills used in this project:** Database design, table relationships (`FOREIGN KEY`), filtering, aggregation (`GROUP BY`, `SUM`, `AVG`), and multi-table joins (`JOIN`).
+* **Skills used in this project:** Database design, primary & foreign keys, schema integrity (`CHECK` constraints), multi-table `JOIN`s, aggregations (`GROUP BY`, `SUM`, `AVG`), and structured data modeling.
