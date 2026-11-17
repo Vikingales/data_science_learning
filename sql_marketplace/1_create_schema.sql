@@ -7,7 +7,7 @@ CREATE TABLE categories (
 -- 2. Table of users (sellers and buyers)
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
     country VARCHAR(30) NOT NULL,
     created_at DATE NOT NULL
 );
@@ -17,8 +17,8 @@ CREATE TABLE items (
     item_id SERIAL PRIMARY KEY,
     seller_id INT NOT NULL REFERENCES users(user_id),
     title VARCHAR(100) NOT NULL,
-    category_id INT REFERENCES categories(category_id),
-    price NUMERIC(10, 2) NOT NULL,
+    category_id INT NOT NULL REFERENCES categories(category_id),
+    price NUMERIC(10, 2) NOT NULL CHECK (price > 0),
     status VARCHAR(20) NOT NULL CHECK (status IN ('active', 'sold', 'reserved'))
 );
 
@@ -28,7 +28,7 @@ CREATE TABLE orders (
     item_id INT NOT NULL UNIQUE REFERENCES items(item_id), -- One item can be sold once
     buyer_id INT NOT NULL REFERENCES users(user_id),
     order_date DATE NOT NULL,
-    shipping_fee NUMERIC(5, 2) NOT NULL
+    shipping_fee NUMERIC(5, 2) NOT NULL CHECK (shipping_fee >= 0)
 );
 
 
