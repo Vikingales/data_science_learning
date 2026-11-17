@@ -13,46 +13,35 @@ A Python script built to automate the analysis of raw server logs. It filters ou
 ### 2. [E-commerce Database Analysis (SQL)](./sql_marketplace)
 A relational database schema designed for an online marketplace platform prototype (similar to Vinted). Includes DDL scripts for table creation (`users`, `items`), mock data insertion, and analytical SQL queries.
 
-####  Database Schema & Relationships:
+#### Database Schema & Relationships:
 
-**1. `users` (Users / Sellers / Buyers)**
-| Column | Type | Key / Constraint | Description |
-| :--- | :--- | :--- | :--- |
-| `user_id` | SERIAL | **PK** | Unique user identifier |
-| `username` | VARCHAR(50) | NOT NULL | User profile handle |
-| `country` | VARCHAR(30) | NOT NULL | User location (e.g., Lithuania) |
-| `created_at` | DATE | NOT NULL | Registration date |
-
-**2. `categories` (Product Categories Catalog)**
-| Column | Type | Key / Constraint | Description |
-| :--- | :--- | :--- | :--- |
-| `category_id` | SERIAL | **PK** | Unique category identifier |
-| `category_name` | VARCHAR(50) | **UNIQUE**, NOT NULL | Category name (e.g., Clothing, Shoes) |
-
-**3. `items` (Marketplace Listings)**
-| Column | Type | Key / Constraint | Description |
-| :--- | :--- | :--- | :--- |
-| `item_id` | SERIAL | **PK** | Unique item identifier |
-| `seller_id` | INT | **FK** $\rightarrow$ `users(user_id)` | User who listed the item |
-| `title` | VARCHAR(100) | NOT NULL | Item title / description |
-| `category_id` | INT | **FK** $\rightarrow$ `categories(category_id)` | Item category reference |
-| `price` | NUMERIC(10, 2) | NOT NULL | Item price |
-| `status` | VARCHAR(20) | **CHECK** (`active`, `sold`, `reserved`) | Current item state |
-
-**4. `orders` (Transactions & Purchases)**
-| Column | Type | Key / Constraint | Description |
-| :--- | :--- | :--- | :--- |
-| `order_id` | SERIAL | **PK** | Unique transaction identifier |
-| `item_id` | INT | **FK**, **UNIQUE** $\rightarrow$ `items(item_id)` | Sold item (1-to-1 relation) |
-| `buyer_id` | INT | **FK** $\rightarrow$ `users(user_id)` | User who purchased the item |
-| `order_date` | DATE | NOT NULL | Date of purchase |
-| `shipping_fee` | NUMERIC(5, 2) | NOT NULL | Delivery cost |
-
----
+```text
+┌─────────────────────────┐                     ┌─────────────────────────┐
+│       categories        │                     │          users          │
+├─────────────────────────┤          __________ ├─────────────────────────┤
+│ PK  category_id         │         |(1-to-many)│ PK  user_id             │
+│     category_name       │         |           │     username            │
+└────────────┬────────────┘         |           |     country             |
+             |                      |           |     created_at          |
+             |                      |           └──────┬──────────────────┘
+             │                      |                  │           
+             │ (1-to-many)          |                  │  (1-to-many)         
+             ▼                      |                  ▼           
+┌─────────────────────────┐         |            ┌─────────────────────────┐
+│          items          │         |            │         orders          │
+├─────────────────────────┤         |            ├─────────────────────────┤
+│ PK  item_id             │ ◄───────             │ PK  order_id            │
+│ FK  category_id         │                      │ FK  buyer_id            │
+│ FK  seller_id           │ ───────────────►     │ FK  item_id             │
+│     title               │   (1-to-1)           |     order_date          |          
+|     price               |                      |     shipping_fee        |
+|     status              |                      └─────────────────────────┘
+└─────────────────────────┘                      
+```
 
 * **`users`** $\rightarrow$ **`items`** (One-to-Many): A single user/seller can list multiple items. Linked via `seller_id = user_id`.
 * **`categories`** $\rightarrow$ **`items`** (One-to-Many): Each category contains multiple items. Linked via `category_id`.
 * **`items`** $\rightarrow$ **`orders`** (One-to-One): An item can be sold and ordered only once. Linked via `item_id`.
-* **`users` (Buyer)** $\rightarrow$ **`orders`** (One-to-Many): A user can purchase multiple items over time. Linked via `buyer_id = user_id`.
+* **`users`** $\rightarrow$ **`orders`** (One-to-Many): A user can purchase and sell multiple items over time. Linked via `buyer_id = user_id`.
 
 **Skills used in this project:** Database design, primary & foreign keys, schema integrity (`CHECK` constraints), multi-table `JOIN`s, aggregations (`GROUP BY`, `SUM`, `AVG`), and structured data modeling.
