@@ -34,9 +34,9 @@ A relational database schema designed for an online marketplace platform prototy
 └─────────────────────────┘
 ```
 
-* **`users`** $\rightarrow$ **`items`** (One-to-Many): A single user/seller can list multiple items. Linked via `seller_id = user_id`.
-* **`categories`** $\rightarrow$ **`items`** (One-to-Many): Each category contains multiple items. Linked via `category_id`.
-* **`items`** $\rightarrow$ **`orders`** (One-to-One): An item can be sold and ordered only once. Linked via `item_id`.
-* **`users` (Buyer)** $\rightarrow$ **`orders`** (One-to-Many): A user can purchase multiple items over time. Linked via `buyer_id = user_id`.
+`users`** $\rightarrow$ **`items`** (One-to-Many): A single user/seller can list multiple items. Linked via `seller_id = user_id`.
+`categories`** $\rightarrow$ **`items`** (One-to-Many): Each category contains multiple items. Linked via `category_id`.
+`items`** $\rightarrow$ **`orders`** (One-to-One): An item can be sold and ordered only once. Linked via `item_id`.
+`users` (Buyer)** $\rightarrow$ **`orders`** (One-to-Many): A user can purchase multiple items over time. Linked via `buyer_id = user_id`.
 
 * **Skills used in this project:** Database design, primary & foreign keys, schema integrity (`CHECK` constraints), multi-table `JOIN`s, aggregations (`GROUP BY`, `SUM`, `AVG`), and structured data modeling.
